@@ -3,6 +3,12 @@ uuid = "24d31e85-0af4-4c7a-a6d4-e2c38fe62c63"
 authors = ["htyeim <htyeim@gmail.com>"]
 version = "0.1.0"
 
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Geodesy = "0ef565a4-170c-5f04-8de2-149903a85f3d"
+NearestNeighbors = "b8a86587-4115-5ab1-83bc-aa920d37bbce"
+ZipFile = "a5390f91-8eb1-5f08-bee0-b1d1ffed6cea"
+
 [compat]
 julia = "1"
 
