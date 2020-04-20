@@ -1,7 +1,7 @@
 name = "HTrg"
 uuid = "24d31e85-0af4-4c7a-a6d4-e2c38fe62c63"
 authors = ["htyeim <htyeim@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
