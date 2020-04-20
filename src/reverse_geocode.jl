@@ -117,7 +117,7 @@ end
 const coordinates, locations, countries =  load_geocode(cities1000, countryInfo)
 const kdtree = KDTree(coordinates)
 
-function get_geocode(e1::ECEF, kdtree::KDTree = kdtree,
+function reverse_geocode(e1::ECEF, kdtree::KDTree = kdtree,
                     locations::Array{Tuple{String,String},1} = locations,
                     countries::Dict{String,Tuple{String,Int64,String,String,Float64,Float64}} = countries )
     idxs, dists = knn(kdtree, e1, 1, true)
