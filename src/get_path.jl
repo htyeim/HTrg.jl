@@ -1,5 +1,5 @@
 
-function get_rg_root(k::String)
+function get_save_root(k::String)
     file_to = joinpath(homedir(), ".juliaHTsetting.json")
     settings = Dict{String,Any}()
     if isfile(file_to)
@@ -19,5 +19,7 @@ function get_rg_root(k::String)
     end
 end
 
-const path_rg_root = get_rg_root("HTrg_data")
+get_rg_root() = get_save_path("HTrg_data")
+
+const path_rg_root = get_rg_root()
 
