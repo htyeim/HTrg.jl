@@ -1,7 +1,21 @@
 
-const this_dir = @__DIR__
-const countryInfo = joinpath(this_dir, "countryInfo.txt")
-const cities1000 = joinpath(this_dir, "cities1000.zip")
+export reverse_geocode
+
+# Remote file: cities1000.zip
+const _cities1000r = @RemoteFile(
+    "https://download.geonames.org/export/dump/cities1000.zip",
+    file = "cities1000.zip",
+    dir = "$path_rg_root",
+    updates = :monthly
+    )
+
+# Remote file: countryInfo.txt
+const _countryInfor = @RemoteFile(
+    "https://download.geonames.org/export/dump/countryInfo.txt",
+    file = "countryInfo.txt",
+    dir = "$path_rg_root",
+    updates = :monthly
+    )
 
 #= 
 a = """
@@ -82,22 +96,20 @@ function read_countries(file::String)
 end
 
 
-function load_geocode(cities1000::String = cities1000, countryInfo::String = countryInfo, )
+function load_geocode(cities1000r::RemoteFile = _cities1000r, countryInfor::RemoteFile = _countryInfor, )
 
-    for ifile in [countryInfo,cities1000]
-        isfile(ifile) && continue
-        ch = `curl https://download.geonames.org/export/dump/$ifile -z $ifile -sR -o $ifile`
-        run(ch, )
-    end
+    for ifile in [countryInfor,cities1000r] download(ifile) end
 
+    cities1000 = path(cities1000r)
     if endswith(cities1000, ".zip") 
         c = string(cities1000[1:end - 4], ".txt")
+        bc = basename(c)
         if isfile(c) && mtime(cities1000) - mtime(c) < 86400
             cities1000 = c
         else
             r = ZipFile.Reader(cities1000);
             for f in r.files
-                if f.name == c
+                if f.name == bc
                     println("Filename: $(f.name)")
                     open(c, "w") do fo
                         write(fo, read(f, String));
@@ -108,14 +120,17 @@ function load_geocode(cities1000::String = cities1000, countryInfo::String = cou
             cities1000 = c
         end
     end
-
+    @show cities1000
     a, b = read_cities(cities1000);
-    c = read_countries(countryInfo)
+    @show path(countryInfor)
+    c = read_countries(path(countryInfor))
+
     a, b, c
 end
 
-const coordinates, locations, countries =  load_geocode(cities1000, countryInfo)
+const coordinates, locations, countries =  load_geocode(_cities1000r, _countryInfor)
 const kdtree = KDTree(coordinates)
+
 
 function reverse_geocode(e1::ECEF, kdtree::KDTree = kdtree,
                     locations::Array{Tuple{String,String},1} = locations,
