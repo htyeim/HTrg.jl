@@ -19,7 +19,7 @@ function get_save_root(k::String)
     end
 end
 
-get_rg_root() = get_save_path("HTrg_data")
+get_rg_root() = get_save_root("HTrg_data")
 
 const path_rg_root = get_rg_root()
 
