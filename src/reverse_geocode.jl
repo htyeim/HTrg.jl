@@ -6,7 +6,7 @@ const _cities1000r = @RemoteFile(
     "https://download.geonames.org/export/dump/cities1000.zip",
     file = "cities1000.zip",
     dir = "$path_rg_root",
-    updates = :monthly
+    updates = :yearly
     )
 
 # Remote file: countryInfo.txt
@@ -14,7 +14,7 @@ const _countryInfor = @RemoteFile(
     "https://download.geonames.org/export/dump/countryInfo.txt",
     file = "countryInfo.txt",
     dir = "$path_rg_root",
-    updates = :monthly
+    updates = :yearly
     )
 
 #= 
