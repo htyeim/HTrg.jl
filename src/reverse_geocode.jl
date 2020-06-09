@@ -120,9 +120,9 @@ function load_geocode(cities1000r::RemoteFile = _cities1000r, countryInfor::Remo
             cities1000 = c
         end
     end
-    @show cities1000
+    # @show cities1000
     a, b = read_cities(cities1000);
-    @show path(countryInfor)
+    # @show path(countryInfor)
     c = read_countries(path(countryInfor))
 
     a, b, c
