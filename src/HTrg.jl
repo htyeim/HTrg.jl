@@ -7,7 +7,9 @@ using NearestNeighbors
 using RemoteFiles
 using JSON
 
-include("get_path.jl")
+const path_rg_root = joinpath(homedir(), "RD", "RGEO")
+
+
 include("reverse_geocode.jl")
 
 greet() = print("Hello World! HTrg")
