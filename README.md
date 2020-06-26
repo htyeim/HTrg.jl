@@ -10,7 +10,12 @@ Get geocode from ECEF
 mainly based on [reverse_geocode](https://bitbucket.org/richardpenman/reverse_geocode) and [reverse-geocoder](https://github.com/thampiman/reverse-geocoder).
 
 
+
 ```
+using Pkg
+Pkg.add("https://github.com/htyeim/HTrg.jl")
+
+
 using Geodesy
 using HTrg
 
