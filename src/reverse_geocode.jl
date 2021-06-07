@@ -55,7 +55,7 @@ function read_cities(file::String)
     sizehint!(locations, suggest_size)
     # sizehint!(locations1, suggest_size)
     if isfile(file)
-        for row in CSV.File(file, delim = '\t',header = [:gid,:name,:ascname,:altname,
+        for row in CSV.File(file, delim='\t',header=[:gid,:name,:ascname,:altname,
                                             :lat,:lon,:fcl,:fco,:cc,
                                             :cc2,:a1c,:a2c,:a3c,:a4c,
                                             :pop,:ele,:dem,:tz,:md])
@@ -79,10 +79,11 @@ a =#
 function read_countries(file::String)
     ci = Dict{String,Tuple{String,Int64,String,String,Float64,Float64}}()
     if isfile(file)
-        for row in CSV.File(file, delim = '\t',  comment = "#", 
-                                header = [:iso,:iso3,:ison,:fips,:name,:capital,:area,:pup,:cont,
+        for row in CSV.File(file, delim='\t',  comment="#", 
+                                header=[:iso,:iso3,:ison,:fips,:name,:capital,:area,:pup,:cont,
                                             :c10,:c11, :c12, :c13, :c14,
                                             :c15, :c16, :c17, :c18, :c19,], )
+            # @show file
             # @show row
             ci[row.iso] = row.iso3, row.ison,
                             row.name, ismissing(row.capital) ? "" : row.capital,
@@ -96,7 +97,7 @@ function read_countries(file::String)
 end
 
 
-function load_geocode(cities1000r::RemoteFile = _cities1000r, countryInfor::RemoteFile = _countryInfor, )
+function load_geocode(cities1000r::RemoteFile=_cities1000r, countryInfor::RemoteFile=_countryInfor, )
 
     for ifile in [countryInfor,cities1000r] download(ifile) end
 
@@ -132,9 +133,9 @@ const coordinates, locations, countries =  load_geocode(_cities1000r, _countryIn
 const kdtree = KDTree(coordinates)
 
 
-function reverse_geocode(e1::ECEF, kdtree::KDTree = kdtree,
-                    locations::Array{Tuple{String,String},1} = locations,
-                    countries::Dict{String,Tuple{String,Int64,String,String,Float64,Float64}} = countries )
+function reverse_geocode(e1::ECEF, kdtree::KDTree=kdtree,
+                    locations::Array{Tuple{String,String},1}=locations,
+                    countries::Dict{String,Tuple{String,Int64,String,String,Float64,Float64}}=countries )
     idxs, dists = knn(kdtree, e1, 1, true)
     c, city = locations[idxs[1]]
     if haskey(countries, c)
