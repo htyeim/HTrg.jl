@@ -87,7 +87,7 @@ function read_countries(file::String)
             # @show row
             ci[row.iso] = row.iso3, row.ison,
                             row.name, ismissing(row.capital) ? "" : row.capital,
-                            row.area, row.pup
+                            ismissing(row.area) ? NaN : row.area, row.pup
             # push!(locations1, row)
             
             # break
